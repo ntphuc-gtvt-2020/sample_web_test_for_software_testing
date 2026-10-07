@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HỆ THỐNG TÍNH THUẾ THU NHẬP CÁ NHÂN</title>
+  <link rel="icon" type="image/jpeg" href="icons/utc_icon.jpg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <img class="header-icon" src="icons/utc_icon.jpg" alt="UTC">
+      <span class="header-title">HỆ THỐNG TÍNH THUẾ THU NHẬP CÁ NHÂN</span>
+    </div>
+  </header>
+
+  <nav class="menu" aria-label="Chọn giao diện">
+    <button type="button" class="menu-item active" data-target="view-01">Đơn giản</button>
+    <button type="button" class="menu-item" data-target="view-02">Đầy đủ</button>
+  </nav>
+
+  <main class="app-main">
+    <!-- Screenshot_01 : Basic Calculation Formula -->
+    <section id="view-01" class="view active">
+      <div class="card">
+        <h1 class="view-title">Hệ thống tính thuế thu nhập cá nhân</h1>
+
+        <ul class="constraints">
+          <li>Thu nhập tháng (Gross) từ 1 đến 10.000.000.000 (lớn hơn 0)</li>
+          <li>Số người phụ thuộc từ 0 đến 10</li>
+        </ul>
+
+        <div class="field">
+          <label for="gross-01">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="2" x2="12" y2="22"></line>
+                <path d="M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </span>
+            Thu nhập tháng (Gross)
+          </label>
+          <input id="gross-01" class="input money" type="text" inputmode="numeric"
+                 data-field="gross" data-label="Thu nhập tháng (Gross)" data-max="10000000000" placeholder="0" autocomplete="off">
+          <p class="error" data-error="gross" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="dependents-01">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </span>
+            Số người phụ thuộc
+          </label>
+          <input id="dependents-01" class="input" type="text" inputmode="numeric"
+                 data-field="dependents" data-max="10" placeholder="0" autocomplete="off">
+        </div>
+
+        <button type="button" class="btn-calc">Tính thuế</button>
+
+        <div class="field field-result">
+          <label for="tax-01">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                <line x1="8" y1="6" x2="16" y2="6"></line>
+                <line x1="8" y1="11" x2="8" y2="11"></line>
+                <line x1="12" y1="11" x2="12" y2="11"></line>
+                <line x1="16" y1="11" x2="16" y2="11"></line>
+                <line x1="8" y1="15" x2="8" y2="15"></line>
+                <line x1="12" y1="15" x2="12" y2="15"></line>
+                <line x1="16" y1="15" x2="16" y2="15"></line>
+              </svg>
+            </span>
+            Thuế TNCN phải nộp
+          </label>
+          <input id="tax-01" class="input result" type="text" data-field="tax" placeholder="0" readonly>
+        </div>
+      </div>
+
+      <aside class="explain" aria-label="Diễn giải cách tính thuế">
+        <h2 class="explain-title">Diễn giải cách tính thuế TNCN</h2>
+        <ul class="explain-list">
+          <li>Mức giảm trừ gia cảnh: 15,5 triệu đồng/tháng cho bản thân người nộp thuế và 6,2 triệu đồng/tháng cho mỗi người phụ thuộc.</li>
+          <li>Biểu thuế lũy tiến từng phần (áp dụng 5 bậc):
+            <ul>
+              <li>Bậc 1 (đến 10 triệu đồng): 5%</li>
+              <li>Bậc 2 (trên 10 đến 30 triệu đồng): 10%</li>
+              <li>Bậc 3 (trên 30 đến 60 triệu đồng): 20%</li>
+              <li>Bậc 4 (trên 60 đến 100 triệu đồng): 30%</li>
+              <li>Bậc 5 (trên 100 triệu đồng): 35%</li>
+            </ul>
+          </li>
+          <li>Các bước tính thuế TNCN cơ bản:
+            <ol>
+              <li>Xác định tổng thu nhập (từ tiền lương, tiền công hoặc các nguồn thu chịu thuế).</li>
+              <li>Trừ giảm trừ gia cảnh cho bản thân và người phụ thuộc.</li>
+              <li>Tính thu nhập tính thuế còn lại và áp dụng biểu thuế lũy tiến 5 bậc ở trên.</li>
+            </ol>
+          </li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- Screenshot_02 : Advance Calculation Formula -->
+    <section id="view-02" class="view">
+      <div class="card">
+        <h1 class="view-title">Hệ thống tính thuế thu nhập cá nhân đầy đủ</h1>
+
+        <ul class="constraints">
+          <li>Thu nhập tháng (Gross) từ 1 đến 10.000.000.000 (lớn hơn 0)</li>
+          <li>Số người phụ thuộc từ 0 đến 10</li>
+          <li>Mức lương đóng bảo hiểm từ 1 đến 10.000.000.000 (lớn hơn 0)</li>
+        </ul>
+
+        <div class="field">
+          <label for="gross-02">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="2" x2="12" y2="22"></line>
+                <path d="M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </span>
+            Thu nhập tháng (Gross)
+          </label>
+          <input id="gross-02" class="input money" type="text" inputmode="numeric"
+                 data-field="gross" data-label="Thu nhập tháng (Gross)" data-max="10000000000" placeholder="0" autocomplete="off">
+          <p class="error" data-error="gross" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="dependents-02">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </span>
+            Số người phụ thuộc
+          </label>
+          <input id="dependents-02" class="input" type="text" inputmode="numeric"
+                 data-field="dependents" data-max="10" placeholder="0" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="insurance-02">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </span>
+            Mức lương đóng bảo hiểm
+          </label>
+          <input id="insurance-02" class="input money" type="text" inputmode="numeric"
+                 data-field="insurance" data-label="Mức lương đóng bảo hiểm" data-max="10000000000" placeholder="0" autocomplete="off">
+          <p class="error" data-error="insurance" hidden></p>
+        </div>
+
+        <button type="button" class="btn-calc">Tính thuế</button>
+
+        <div class="field field-result">
+          <label for="tax-02">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                <line x1="8" y1="6" x2="16" y2="6"></line>
+                <line x1="8" y1="11" x2="8" y2="11"></line>
+                <line x1="12" y1="11" x2="12" y2="11"></line>
+                <line x1="16" y1="11" x2="16" y2="11"></line>
+                <line x1="8" y1="15" x2="8" y2="15"></line>
+                <line x1="12" y1="15" x2="12" y2="15"></line>
+                <line x1="16" y1="15" x2="16" y2="15"></line>
+              </svg>
+            </span>
+            Thuế TNCN phải nộp
+          </label>
+          <input id="tax-02" class="input result" type="text" data-field="tax" placeholder="0" readonly>
+        </div>
+      </div>
+
+      <aside class="explain" aria-label="Diễn giải cách tính thuế">
+        <h2 class="explain-title">Diễn giải cách tính thuế TNCN</h2>
+        <ul class="explain-list">
+          <li>Mức giảm trừ gia cảnh: 15,5 triệu đồng/tháng cho bản thân người nộp thuế và 6,2 triệu đồng/tháng cho mỗi người phụ thuộc.</li>
+          <li>Biểu thuế lũy tiến từng phần (áp dụng 5 bậc):
+            <ul>
+              <li>Bậc 1 (đến 10 triệu đồng): 5%</li>
+              <li>Bậc 2 (trên 10 đến 30 triệu đồng): 10%</li>
+              <li>Bậc 3 (trên 30 đến 60 triệu đồng): 20%</li>
+              <li>Bậc 4 (trên 60 đến 100 triệu đồng): 30%</li>
+              <li>Bậc 5 (trên 100 triệu đồng): 35%</li>
+            </ul>
+          </li>
+          <li>Các bước tính thuế TNCN cơ bản:
+            <ol>
+              <li>Xác định tổng thu nhập (từ tiền lương, tiền công hoặc các nguồn thu chịu thuế).</li>
+              <li>Trừ các khoản miễn thuế (phụ cấp, trợ cấp thuộc diện không chịu thuế) và các khoản đóng bảo hiểm bắt buộc (BHXH, BHYT, BHTN).</li>
+              <li>Trừ giảm trừ gia cảnh cho bản thân và người phụ thuộc.</li>
+              <li>Tính thu nhập tính thuế còn lại và áp dụng biểu thuế lũy tiến 5 bậc ở trên.</li>
+            </ol>
+          </li>
+        </ul>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="app-footer-inner">
+      <p>Trường ĐH GTVT - Khoa CNTT</p>
+      <p>Môn: Kiểm thử phần mềm</p>
+      <p>Website mẫu - Bài toán tính thuế thu nhập cá nhân - 10.2026</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
